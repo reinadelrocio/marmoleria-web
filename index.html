@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Marmolería y Servicios Funerarios</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a2d3e19c17.js" crossorigin="anonymous"></script>
+
+<!-- Swiper CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+/>
+
+<style>
+  /* Reset y base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #102a43;
+    color: #cbd5e1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1 {
+    font-weight: 900;
+    color: #f0f0f5;
+    font-size: 2.8rem;
+    text-shadow: 0 0 4px #7c3aed;
+  }
+  p {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    margin-top: 0.3em;
+    color: #bfc9d9;
+  }
+  ul {
+    margin-top: 0.3em;
+    color: #bfc9d9;
+    font-size: 1.2rem;
+  }
+
+  /* Navbar */
+  nav {
+    display: flex;
+    justify-content: flex-end; /* Cambio para alinear a la derecha */
+    gap: 22px;
+    margin: 16px 0 20px 0;
+    padding: 0 12px;
+    user-select: none;
+    z-index: 10000;
+    position: sticky;
+    top: 0;
+    background-color: rgba(20,25,40,0.95);
+    border-radius: 30px;
+  }
+
+  /* Espacio para el logo a la izquierda */
+  .logo-space {
+    width: 150px; /* Espacio reservado para logo */
+    height: 48px; /* Alto aproximado */
+    margin-right: 12px;
+  }
+
+  nav button {
+    background: transparent;
+    border: 2.5px solid transparent;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition:
+      background-color 0.35s ease,
+      border-color 0.35s ease,
+      color 0.35s ease,
+      transform 0.2s ease;
+    box-shadow: 0 0 4px transparent;
+  }
+  nav button:hover,
+  nav button:focus-visible {
+    background-color: #64d8f5;
+    color: #102a43;
+    border-color: #64d8f5;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px #64d8f5;
+    outline-offset: 2px;
+  }
+  nav button.active,
+  nav button[aria-current="page"] {
+    background-color: #7c3aed;
+    color: #f0f0f5;
+    border-color: #7c3aed;
+    box-shadow: 0 0 12px #7c3aed;
+  }
+
+  /* Dropdown styles */
+  .dropdown {
+    position: relative;
+  }
+  .dropdown-toggle {
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: transparent;
+    border: 2.5px solid transparent;
+    color: #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition:
+      background-color 0.35s ease,
+      border-color 0.35s ease,
+      color 0.35s ease,
+      transform 0.2s ease;
+    box-shadow: 0 0 4px transparent;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+  }
+  .dropdown-toggle:hover,
+  .dropdown-toggle[aria-expanded="true"] {
+    background-color: #64d8f5;
+    color: #102a43;
+    border-color: #64d8f5;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px #64d8f5;
+  }
+  .dropdown-toggle.active {
+    background-color: #7c3aed;
+    color: #f0f0f5;
+    border-color: #7c3aed;
+    box-shadow: 0 0 12px #7c3aed;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(20,25,40,0.9);
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    min-width: 180px;
+    z-index: 10001;
+  }
+  .dropdown-menu button {
+    width: 100%;
+    padding: 10px 18px;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: #cbd5e1;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background-color 0.3s ease;
+  }
+  .dropdown-menu button:hover,
+  .dropdown-menu button:focus {
+    background-color: #7c3aed;
+    color: #f0f0f5;
+    outline: none;
+  }
+  .dropdown-menu button.active,
+  .dropdown-menu button[aria-current="page"] {
+    background-color: #7c3aed;
+    color: #f0f0f5;
+  }
+
+  /* Sections */
+  main {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    padding: 0 12px;
+  }
+  section {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease, max-height 0.8s ease;
+  }
+  section.active {
+    opacity: 1;
+    max-height: 2000px; /* suficiente para el contenido */
+    overflow: visible;
+    transform: translateY(0);
+  }
+  .section-image {
+    width: 100%;
+    margin-top: 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(40,10,200,0.25);
+  }
+
+  /* Swiper custom */
+  .swiper {
+    max-width: 800px;
+    margin: 30px auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(64,32,96,0.4);
+  }
+  .swiper-slide img {
+    width: 100%;
+    object-fit: cover;
+    height: 400px;
+  }
+  .swiper-pagination-bullet {
+    background: #cbd5e1;
+    opacity: 0.6;
+  }
+  .swiper-pagination-bullet-active {
+    background: #7c3aed !important;
+    opacity: 1;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #7c3aed;
+  }
+</style>
+</head>
+
+<body>
+<header>
+  <nav aria-label="Menú principal">
+    <div class="logo-space"></div> <!-- Espacio vacío para logo -->
+
+    <div class="dropdown">
+      <button class="dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-quienes">
+        ¿QUIÉNES SOMOS? <i class="fas fa-caret-down" aria-hidden="true" style="margin-left: 6px;"></i>
+      </button>
+      <div id="submenu-quienes" class="dropdown-menu" role="menu" aria-label="Submenú de ¿Quiénes Somos?">
+        <button data-section="mision" type="button" role="menuitem" class="submenu-btn">MISIÓN</button>
+        <button data-section="vision" type="button" role="menuitem" class="submenu-btn">VISIÓN</button>
+        <button data-section="historia" type="button" role="menuitem" class="submenu-btn">NUESTRA HISTORIA</button>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="submenu-servicios">
+        Servicios <i class="fas fa-caret-down" aria-hidden="true" style="margin-left: 6px;"></i>
+      </button>
+      <div id="submenu-servicios" class="dropdown-menu" role="menu" aria-label="Submenú de Servicios">
+        <button data-section="marmoleria" type="button" role="menuitem" class="submenu-btn">Marmolería</button>
+        <button data-section="funeraria" type="button" role="menuitem" class="submenu-btn">Funeraria</button>
+      </div>
+    </div>
+
+    <button data-section="materiales" type="button">Materiales</button> <!-- Cambiado -->
+    <button data-section="contacto" type="button">Contáctanos</button> <!-- Cambiado -->
+  </nav>
+</header>
+
+<main>
+  <section id="mision" tabindex="0" aria-labelledby="mision-title" role="region">
+    <h1 id="mision-title" tabindex="-1">Misión</h1>
+    <p>Ser la marmolería y Funeraría de referencia en la región, destacándonos por la calidad de nuestros productos y la satisfacción de nuestros clientes.
+</p>
+  </section>
+
+  <section id="vision" tabindex="0" aria-labelledby="vision-title" role="region">
+    <h1 id="vision-title" tabindex="-1">Visión</h1>
+    <p>Proveer mármol y servicios de procesamiento con excelencia, innovando continuamente para satisfacer las necesidades y expectativas de nuestros clientes.
+</p>
+  </section>
+
+  <section id="historia" tabindex="0" aria-labelledby="historia-title" role="region">
+    <h1 id="historia-title" tabindex="-1">Nuestra Historia</h1>
+    <p>Desde los 12 años, trabajaba en un taller de marmolería durante el día y estudiaba en la noche. Con 14 años de experiencia en el oficio, decidió trabajar por su cuenta, creando figuras de mármol y bronce para talleres que fabricaban lápidas. A los 28 años, abrió su propio local en Biblián en 1996, dedicándose a la fabricación completa de lápidas.
+Su padre solía decir: “uno vive y se debe al cliente”, y esta filosofía lo guió durante los 26 años que siguieron. Su compromiso con el arte y el servicio al cliente convirtió su taller en un referente local, donde cada día era una nueva oportunidad para aprender y perfeccionar su</p>
+  </section>
+
+  <!-- Sección Marmolería -->
+  <section id="marmoleria" tabindex="0" aria-labelledby="marmoleria-title" role="region">
+    <h1 id="marmoleria-title" tabindex="-1">Marmolería</h1>
+    <p>Servicios especializados en diseño y fabricación de piezas de mármol y granito.</p>
+  </section>
+
+  <!-- Sección Funeraria -->
+  <section id="funeraria" tabindex="0" aria-labelledby="funeraria-title" role="region">
+    <h1 id="funeraria-title" tabindex="-1">Funeraria</h1>
+    <p>Servicios funerarios integrales con respeto y profesionalismo.</p>
+  </section>
+
+  <section id="materiales" tabindex="0" aria-labelledby="materiales-title" role="region">
+    <h1 id="materiales-title" tabindex="-1">Materiales que usamos en la marmolería</h1>
+    <p>Usamos mármoles importados y locales, granito, cuarzo y otros materiales de alta calidad.</p>
+  </section>
+
+  <section id="contacto" tabindex="0" aria-labelledby="contacto-title" role="region">
+    <h1 id="contacto-title" tabindex="-1">Contacto</h1>
+    <p>Puedes contactarnos por teléfono, correo o visitándonos en nuestra sede principal.</p>
+  </section>
+</main>
+
+<script>
+  // Toggle dropdown menus
+  document.querySelectorAll('.dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      const menu = document.getElementById(btn.getAttribute('aria-controls'));
+      if (menu) {
+        menu.style.display = expanded ? 'none' : 'block';
+      }
+    });
+  });
+
+  // Show sections on button click
+  const buttons = document.querySelectorAll('nav button[data-section], .submenu-btn');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Hide dropdown menus on click
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        menu.style.display = 'none';
+      });
+      document.querySelectorAll('.dropdown-toggle').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+
+      const sectionId = button.getAttribute('data-section');
+      if (!sectionId) return;
+
+      document.querySelectorAll('main section').forEach(sec => {
+        if (sec.id === sectionId) {
+          sec.classList.add('active');
+          sec.focus();
+        } else {
+          sec.classList.remove('active');
+        }
+      });
+
+      // Mark active button
+      buttons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
+
+  // Initialize - show first section
+  window.addEventListener('load', () => {
+    const firstSection = document.querySelector('main section');
+    if (firstSection) {
+      firstSection.classList.add('active');
+      firstSection.focus();
+      // Mark first button active
+      const firstBtn = document.querySelector(`button[data-section="${firstSection.id}"], .submenu-btn[data-section="${firstSection.id}"]`);
+      if (firstBtn) firstBtn.classList.add('active');
+    }
+  });
+</script>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+</body>
+</html>
